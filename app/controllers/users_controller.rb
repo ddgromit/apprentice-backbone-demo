@@ -4,6 +4,16 @@ class UsersController < ApplicationController
   def index
     @users = User.all
 
+    @users_json_objs = @users.map do |user|
+      {
+        :full_name => user.full_name,
+        :score => user.score,
+        :url => user_path(user)
+      }
+    end
+    @users_json = @users_json_objs.to_json
+
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
